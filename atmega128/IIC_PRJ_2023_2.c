@@ -22,7 +22,7 @@ U8 IIC_DAT = 0x55;                  // 쓸 데이터 값
 U8 READ_DATA = 0;                   // 읽어온 데이터 값
 U8 EINT4_FLAG = 0;                  // inetrrupt 4번 flag
 U8 EINT5_FLAG = 0;                  // inetrrupt 5번 flag
-                                    
+
 
 void IIC_START(void);               // START 함수
 void IIC_STOP(void);                // STOP 함수
@@ -30,8 +30,8 @@ void ACK_write(void);               // ACK 함수  master -> slave
 void no_ACK(void);                  // NACK 함수 master -> slave
 void ACK_read(void);                // ACK 함수  slave -> master
 void Process_8data(U8 value);       // Bytewrite 8비트 데이터 쓰기
-void Process_8data_read(void);      // Randomread 8비트 데이터 받기 
-void Byte_write(void);              // Bytewrite 함수 
+void Process_8data_read(void);      // Randomread 8비트 데이터 받기
+void Byte_write(void);              // Bytewrite 함수
 void Random_read(void);             // Randomread 함수
 
 void main(void){
@@ -92,7 +92,7 @@ void Process_8data(U8 value){    // Bytewrite 8비트 데이터 쓰기
         delay_us(6);
         CLK_HIGH;  
         delay_us(12);
-        CLK_LOW; 
+        CLK_LOW;
         delay_us(6);       
     }//end of for      
     if((value_buffer&0x80)==0x80)DAT_HIGH;     // LSB 따로 써줌 위의 반복문에서  value_buffer의 MSB에 데이터 LSB값이 있음           
@@ -117,9 +117,9 @@ void Process_8data_read(void){                // Randomread 8비트 데이터 받기
         delay_us(12);
         CLK_LOW;  
         delay_us(6);
-        TEMP_READ_DATA = (PIND & 0x02 == 0x00) ? 0x00 : 0x80;// 데이터 읽은 값이 0이면 0x00 아니면 0x80/ 7번 비트에 계속 쌓임
-        TEMP_READ_DATA >>= i;                                // MSB부터 자리 정렬 shift/ 6번 데이터, 5번 데이터 값 저장
-        READ_DATA |= TEMP_READ_DATA;                         // 읽은 데이터값 저장/ 7,6,5데이터값 저장
+        TEMP_READ_DATA = (PIND & 0x02 == 0x00) ? 0x00 : 0x80;// 데이터 읽은 값이 0이면 0x00 아니면 0x80
+        TEMP_READ_DATA >>= i;                                // MSB부터 자리 정렬 shift
+        READ_DATA |= TEMP_READ_DATA;                         // 읽은 데이터값 저장
     }//end of for  
     if(IIC_DAT==READ_DATA)PORTC=0xf0;        // write 값과 read 값이 일치하면 led 동작    
 }//end of Process_8data_read
